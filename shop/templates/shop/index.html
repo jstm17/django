@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products List</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+
+<body>
+    <header>
+        <a href="/shop/create" class="btn">Add Tv Show</a>
+        <p>TV Show Shop</p>
+        <a href="/" class="btn">Socket.io</a>
+    </header>
+
+    <main>
+        <div class="products">
+            {% for data in dataset %}
+
+            <a href={{ data.id }} class="product">
+                <img src={{ data.image }} class="product_img">
+                <p class="product_title">{{ data.title }}</p>
+            </a>
+
+            {% endfor %}
+        </div>
+    </main>
+</body>
+
+</html>

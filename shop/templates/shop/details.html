@@ -1,0 +1,41 @@
+{% load static %}
+
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ data.title }}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+
+
+<body>
+    <header>
+        <a href="/shop" class="btn">Back</a>
+        <p>TV Show Shop</p>
+        <a href="/" class="btn">Socket.io</a>
+    </header>
+
+    <main>
+        <div class="product_details">
+            <img src={{ data.image }}>
+            <div class="product_details_content">
+                <div class="product_details_text">
+                    <h1>{{ data.title }}</h1>
+                    <p>{{ data.description }}</p>
+                    <p>Price : {{ data.price }}€ <br><br> Quantity : {{ data.quantity }}</p>
+                </div>
+                <div class="btn_container">
+                    <a href="/shop/{{ data.id }}/delete" class="btn delete_btn">Delete</a>
+                    <a href="/shop/{{ data.id }}/update" class="btn edit_btn">Edit</a>
+                    <a href="/shop/{{ data.id }}/buy" class="btn ">Buy</a>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>

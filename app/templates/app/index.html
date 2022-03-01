@@ -1,0 +1,12 @@
+<div class="main">
+
+<a href="/app/create">Create question</a><br>
+ 
+    {% for data in dataset %}
+    
+    <hr> 
+    <a href={{ data.id }}>{{ data.text }}</a>
+    
+    {% endfor %}
+ 
+</div>

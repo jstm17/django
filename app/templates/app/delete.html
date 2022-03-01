@@ -1,0 +1,9 @@
+<div class="main">
+    <a href="/app/{{ data.id }}">Back</a>
+	<form method="POST">
+		{% csrf_token %}
+		Do you want to delete this item ?
+		<input type="submit" value="Yes" />
+	</form>
+</div>
+
