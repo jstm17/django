@@ -14,3 +14,12 @@ class ProductForm(forms.ModelForm):
 			"price",
 			"quantity",
 		]
+
+class BuyForm(forms.ModelForm):
+	class Meta:
+		model = Product
+
+		fields = [
+			"quantity"
+		]
+		
