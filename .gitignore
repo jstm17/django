@@ -1,0 +1,5 @@
+starter/__pycache__/*
+shop/migrations/__pycache__/*
+shop/__pycache__/*
+app/migrations/__pycache__/*
+app/__pycache__/*
