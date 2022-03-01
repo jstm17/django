@@ -1,6 +1,6 @@
-from django.shortcuts import (get_object_or_404, render, HttpResponseRedirect)
+from django.shortcuts import (get_object_or_404, render, HttpResponseRedirect, HttpResponse)
 from .models import Product
-from .forms import ProductForm
+from .forms import ProductForm, BuyForm
 
 # PRODUCTS LIST
 
@@ -38,7 +38,11 @@ def update(request, id):
  
     if form.is_valid():
         form.save()
-        return HttpResponseRedirect("/shop/"+id)
+              
+        if obj.quantity < 1:
+                return HttpResponseRedirect("/shop/")
+        else:
+            return HttpResponseRedirect("/shop/"+id)
  
     context = {"form" : form, "data" : Product.objects.get(id = id)}
  
@@ -61,29 +65,22 @@ def delete(request, id):
 def buy(request, id):
     obj = get_object_or_404(Product, id = id)
  
-    form = ProductForm(request.POST or None, instance = obj)
-    print(obj.quantity - 1)
+    form = BuyForm(request.POST or None)
  
     if request.method =="POST":
-        obj.quantity = obj.quantity - 1
-        obj.save()
-        return HttpResponseRedirect("/shop/"+id)
+        if obj.quantity > int(request.POST['quantity']):
+            obj.quantity = obj.quantity - int(request.POST['quantity'])
+            obj.save()
+        else:
+            erreur = "You cannot buy more than " + str(obj.quantity) + ' ' + obj.title
+            context = {"erreur": erreur , "form": form, "data" : Product.objects.get(id = id)}
+            return render(request, "shop/buy.html", context)
+
+        if obj.quantity < 1:
+            return HttpResponseRedirect("/shop/")
+        else:
+            return HttpResponseRedirect("/shop/"+id)
  
     context = {"form" : form, "data" : Product.objects.get(id = id)}
  
     return render(request, "shop/buy.html", context)
-
-# def buy(request, id):
-#     obj = get_object_or_404(Product, id = id)
- 
-#     form = ProductForm(request.POST or None, instance = obj)
-#     print(obj.quantity - 1)
- 
-#     if request.method =="POST":
-#         obj.quantity = obj.quantity - 1
-#         obj.save()
-#         return HttpResponseRedirect("/shop/"+id)
- 
-#     context = {"form" : form, "data" : Product.objects.get(id = id)}
- 
-#     return render(request, "shop/buy.html", context)
